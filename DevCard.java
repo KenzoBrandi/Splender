@@ -1,5 +1,9 @@
+import java.util.ArrayList;
 public class DevCard implements Displayable {
-    
+    private int level;
+    private ArrayList<Integer> cost;
+    private int points;
+    private int resourceType;
     public String[] toStringArray(){
         /** EXAMPLE
          * ┌────────┐
@@ -12,9 +16,6 @@ public class DevCard implements Displayable {
          * └────────┘
          */
         String pointStr = "  ";
-        String[] cardStr = {}; //-- ASUPPRIMER
-        /*
-         * Ce code est à décommenter une fois que la classe DevCard a été implémentée
         if(getPoints()>0){
             pointStr = new String(new int[] {getPoints()+9311}, 0, 1);
         }
@@ -28,12 +29,12 @@ public class DevCard implements Displayable {
                             "\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518"};
         //update cost of the repr
         int i=6;
-        for(ACOMPLETER){ //-- parcourir l'ensemble des resources (res)en utilisant l'énumération Resource
+        for(Integer ressource: cost){ //-- parcourir l'ensemble des resources (res)en utilisant l'énumération Resource
             if(getCost().getNbResource(res)>0){
                 cardStr[i] = "\u2502"+getCost().getNbResource(res)+" "+res.toSymbol()+"    \u2502";
                 i--;
             }
-        } */
+        } 
         return cardStr;
     }
 
@@ -73,5 +74,21 @@ public class DevCard implements Displayable {
         }
         */
         return cardStr;
+    }
+    
+    public int getLevel(){
+        return level;
+    }
+    
+    public ArrayList<Integer> getCost(){
+    return cost;
+    }
+
+    public int getPoints(){
+    return points;
+    }
+
+    public int getRessourceType(){
+    return ressourceType;
     }
 }
