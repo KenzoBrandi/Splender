@@ -1,9 +1,15 @@
 import java.util.ArrayList;
 public class DevCard implements Displayable {
     private int level;
-    private ArrayList<Integer> cost;
+    private Resources cost;
     private int points;
-    private int resourceType;
+    private Resource resourceType;
+    public void DevCard(int niveau,Resources cout,int pointsPrestige,Resource bonus){
+        level = niveau;
+        cost = cout;
+        points = pointsPrestige;
+        resourceType = bonus;
+    }
     public String[] toStringArray(){
         /** EXAMPLE
          * ┌────────┐
@@ -29,7 +35,7 @@ public class DevCard implements Displayable {
                             "\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518"};
         //update cost of the repr
         int i=6;
-        for(Integer ressource: cost){ //-- parcourir l'ensemble des resources (res)en utilisant l'énumération Resource
+        for(Resource res: cost){ //-- parcourir l'ensemble des resources (res)en utilisant l'énumération Resource
             if(getCost().getNbResource(res)>0){
                 cardStr[i] = "\u2502"+getCost().getNbResource(res)+" "+res.toSymbol()+"    \u2502";
                 i--;
@@ -80,7 +86,7 @@ public class DevCard implements Displayable {
         return level;
     }
     
-    public ArrayList<Integer> getCost(){
+    public Resources getCost(){
     return cost;
     }
 
@@ -88,7 +94,7 @@ public class DevCard implements Displayable {
     return points;
     }
 
-    public int getRessourceType(){
-    return ressourceType;
+    public Resource getRessourceType(){
+    return resourceType;
     }
 }
