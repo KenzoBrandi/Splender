@@ -9,22 +9,26 @@ import java.util.Set;
 import java.util.Collections;
 
 public class Board implements Displayable {
-    
-    private ArrayList<DevCard> pile1;
-    private ArrayList<DevCard> pile2;
-    private ArrayList<DevCard> pile3;
-    
-    private ArrayList<DevCard> visibleCards ; 
-    private Resources jetons;
+
+    private Stack<DevCard> pile1;
+    private Stack<DevCard> pile2;
+    private Stack<DevCard> pile3;
+
+    private DevCard[][] visibleCards ; 
+    private Resources resources;
+
     
     /**
-    *Constructeur de la classe Board
-    */
-    public Board(){
+     *Constructeur de la classe Board
+     */
+    public Board(int nbPlayers){
         //Création des 3 piles de DevCard faces cachées
-        pile1 = new ArrayList<DevCard>();
-        pile2 = new ArrayList<DevCard>();
-        pile3 = new ArrayList<DevCard>();
+        pile1 = new Stack<DevCard>();
+        pile2 = new Stack<DevCard>();
+        pile3 = new Stack<DevCard>();
+        ArrayList<DevCard> stack = new ArrayList<DevCard>(); 
+
+        visibleCards = new DevCard[3][4];
         try {
             // Chemin vers le fichier CSV
             File file = new File("stats.csv");
@@ -32,14 +36,18 @@ public class Board implements Displayable {
 
             // Lire le fichier ligne par ligne
             while (scanner.hasNextLine()) {
-                String line = scanner.nextLine(); // Lire une ligne entière
-                String[] values = line.split(","); // Diviser la ligne par les virgules (séparateur CSV)
-
-                // Afficher les valeurs lues
-                for (String value : values) {
-                    System.out.print(value + " ");
+                String line = scanner.nextLine();
+                String[] values = line.split(",");
+                Resource[] res ={ Resource.DIAMOND,Resource.SAPPHIRE,Resource.EMERALD,Resource.RUBY,Resource.ONYX};
+                int niveau = Integer.parseInt(values[0]);
+                Resources resources = new Resources();
+                for (int i = 1;i<6;i++){
+                    resources.setNbResource(res[i-1], Integer.valueOf(values[i]));
                 }
-                System.out.println(); // Passer à la ligne suivante
+                int points = Integer.parseInt(values[6]);
+                Resource resourceType = Resource.valueOf(values[7]);
+                DevCard newCard = new DevCard(niveau,resources,points,resourceType);
+                stack.add(newCard);
             }
 
             scanner.close(); // Fermer le scanner
@@ -47,67 +55,80 @@ public class Board implements Displayable {
             System.out.println("Fichier introuvable : " + e.getMessage());
         }
 
-        //Rendre visible 4 cartes de chaques piles de DevCard
-        visibleCards  = new ArrayList<DevCard>();
-        for(int i=1;i<4;i++){
-            for(int k=0; k<4; k++){
-                visibleCards .add(drawCard(i));
+        Collections.shuffle(stack);
+        for (DevCard card: stack){
+            int niveau = card.getLevel();
+            if (niveau == 1){
+                pile1.push(card);
+            } else if (niveau == 2){
+                pile2.push(card);
+            } else if (niveau == 3){
+                pile3.push(card);
             }
         }
-        
-        
+        //Rendre visible 4 cartes de chaques piles de DevCard
+        visibleCards = new DevCard[3][4];
+        for(int i=1;i<4;i++){
+            for(int k=0; k<4; k++){
+                visibleCards[i][k]= drawCard(i);
+            }
+        } 
+
         //Initialisation du nombre de ressources
-        
-        
-    }
-    
-    
-    /**
-    *Retourne le nombre de ressources disponibles sur le plateau
-    *Output: String nombre de ressources disponible par type
-    */
-    
-    public String getNbRessources(){
-        String str = "";
-        for(Resources resources : jetons){
-            str += resources.getNbRessources();
+        resources = new Resources();
+        if (nbPlayers == 2){
+            resources.forEach((key, value) ->{
+                        resources.put(key,new Integer(4));
+                });
+        } else if (nbPlayers == 3){
+            resources.forEach((key, value) ->{
+                        resources.put(key,new Integer(5));
+                });
         }
-        
-        return str;
+
     }
-    
-    
+
     /**
-    *Initialisation du nombre de ressources pour un type donné
-    *Input: String type de ressource
-    */
+     *Retourne le nombre de ressources disponibles sur le plateau
+     *Output: String nombre de ressources disponible par type
+     */
+
+    public String getNbRessources(){
+        StringBuilder str = new StringBuilder();  // Utiliser StringBuilder pour plus d'efficacité
+        resources.forEach((key, value) -> {
+                    str.append(key.toString()).append(" -> ").append(value).append("\n");  // Ajoute chaque élément avec une nouvelle ligne
+            });
+
+        return str.toString();
+    }
+
+    /**
+     *Initialisation du nombre de ressources pour un type donné
+     *Input: String type de ressource
+     */
     public void setNbResources(String type){
-        
+
     }
-    
-    
+
     /**
-    *Ajoute/Enlève une quantité donnée de ressources à un type donné
-    *Input: String type de ressource; int quantité
-    */
+     *Ajoute/Enlève une quantité donnée de ressources à un type donné
+     *Input: String type de ressource; int quantité
+     */
     public void updateNbResource(String type, int qte){
-        
-    
+
     }
-    
     
     /**
-    *Retourne les types de ressources pour lesquels des ressources sont disponibles
-    *Output: String type de ressources
-    */
-    public String getAvailableResources(){
-        
+     *Retourne les types de ressources pour lesquels des ressources sont disponibles
+     *Output: String type de ressources
+     */
+    public void getAvailableResources(){
+
     }
-    
-    
+
     public DevCard getCard(int niveau,int colonne){
-        ArrayList<DevCard> pile = new ArrayList();
-        
+        Stack<DevCard> pile = new Stack<DevCard>();
+
         if (niveau == 1){
             pile = pile1;
         }else if(niveau == 2){
@@ -115,20 +136,18 @@ public class Board implements Displayable {
         }else{
             pile = pile3;
         }
-        
-        
+
         return pile.get(colonne);
     }
-    
-    
+
     public void updateCard(DevCard card){
         //Tire une carte dans la pioche du même niveau que card
-        drawCard(card.tier);
+        drawCard(card.getLevel());
     }
-    
+
     public DevCard drawCard(int niveau){
-        ArrayList<DevCard> pile = new ArrayList();
-        
+        Stack<DevCard> pile = new Stack<DevCard>();
+
         if (niveau == 1){
             pile = pile1;
         }else if(niveau == 2){
@@ -136,30 +155,24 @@ public class Board implements Displayable {
         }else{
             pile = pile3;
         }
-        
-        
+
         if (pile.size() == 0){
             return null;
         }else{
-            return pile.get(0);
+            return pile.pop();
         }
     }
-    
-    
-    public boolean canGivesameTokens(String type){
-        return jetons.getNbRessource(type) >= 4;
+
+    public boolean canGivesameTokens(Resource type){
+        return resources.getNbResource(type) >= 4;
     }
-    
-    
+
     public boolean canGiveDiffTokens(){
         return true;
     }
-    
-    
-    
+
     
     /* --- Stringers --- */
-
     private String[] deckToStringArray(int tier){
         /** EXAMPLE
          * ┌────────┐
@@ -172,7 +185,8 @@ public class Board implements Displayable {
          * └────────┘ │
          *  ╲________╲│
          */
-        ArrayList<DevCard> pile = new ArrayList();
+
+        Stack<DevCard> pile = new Stack<DevCard>();
         if (tier == 1){
             pile = pile1;
         }else if(tier == 2){
@@ -180,17 +194,17 @@ public class Board implements Displayable {
         }else{
             pile = pile3;
         }
-        
+
         int nbCards = pile.size();
         String[] deckStr = {"\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  ",
-                            "\u2502        \u2502\u2572 ",
-                            "\u2502 reste: \u2502 \u2502",
-                            "\u2502   "+String.format("%02d", nbCards)+"   \u2502 \u2502",
-                            "\u2502 carte"+(nbCards>1 ? "s" : " ")+" \u2502 \u2502",
-                            "\u2502 tier "+tier+" \u2502 \u2502",
-                            "\u2502        \u2502 \u2502",
-                            "\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518 \u2502",
-                            " \u2572________\u2572\u2502"};
+                "\u2502        \u2502\u2572 ",
+                "\u2502 reste: \u2502 \u2502",
+                "\u2502   "+String.format("%02d", nbCards)+"   \u2502 \u2502",
+                "\u2502 carte"+(nbCards>1 ? "s" : " ")+" \u2502 \u2502",
+                "\u2502 tier "+tier+" \u2502 \u2502",
+                "\u2502        \u2502 \u2502",
+                "\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518 \u2502",
+                " \u2572________\u2572\u2502"};
         return deckStr;
     }
 
@@ -199,8 +213,8 @@ public class Board implements Displayable {
          * Resources disponibles : 4♥R 4♣E 4♠S 4♦D 4●O
          */
         String[] resStr = {"Resources disponibles : "};
-        
-        for(Resources res : Resource){ //-- parcourir l'ensemble des resources (res) en utilisant l'énumération Resource
+
+        for(Resource res: resources.keySet()){ //-- parcourir l'ensemble des resources (res) en utilisant l'énumération Resource
             resStr[0] += resources.getNbResource(res)+res.toSymbol()+" ";
         }
 
@@ -213,7 +227,7 @@ public class Board implements Displayable {
 
         //Deck display
         String[] deckDisplay = Display.emptyStringArray(0, 0);
-        for(int i=stackCards.size();i>0;i--){
+        for(int i= stackCards.size();i>0;i--){
             deckDisplay = Display.concatStringArray(deckDisplay, deckToStringArray(i), true);
         }
 
@@ -227,20 +241,19 @@ public class Board implements Displayable {
             cardDisplay = Display.concatStringArray(cardDisplay, Display.emptyStringArray(1, 40), true);
             cardDisplay = Display.concatStringArray(cardDisplay, tierCardsDisplay, true);
         }
-        
+
         res = Display.concatStringArray(deckDisplay, cardDisplay, false);
         res = Display.concatStringArray(res, Display.emptyStringArray(1, 52), true);
         res = Display.concatStringArray(res, resourcesToStringArray(), true);
         res = Display.concatStringArray(res, Display.emptyStringArray(35, 1, " \u250A"), false);
         res = Display.concatStringArray(res, Display.emptyStringArray(1, 54, "\u2509"), true);
-        
+
         return res;
     }
 
     @Override
     public String[] toStringArray() {
-        return boardToStringArray();
+        return boardToStringArray();;
     }
-    
 
 }

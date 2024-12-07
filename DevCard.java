@@ -4,7 +4,7 @@ public class DevCard implements Displayable {
     private Resources cost;
     private int points;
     private Resource resourceType;
-    public void DevCard(int niveau,Resources cout,int pointsPrestige,Resource bonus){
+    public DevCard(int niveau,Resources cout,int pointsPrestige,Resource bonus){
         level = niveau;
         cost = cout;
         points = pointsPrestige;
