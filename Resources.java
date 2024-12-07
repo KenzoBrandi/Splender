@@ -3,13 +3,13 @@ import java.util.ArrayList;
 /**
  * Class Ressources avec une table de hachage
  */
-public class Ressources extends HashMap<Resource, Integer>
+public class Resources extends HashMap<Resource, Integer>
 {
     
     /**
      * Constructeur de Ressources
      */
-    public Ressources()
+    public Resources()
     {
        super(); 
        for ( Resource res: Resource.values()){
