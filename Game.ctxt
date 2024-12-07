@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.target=Game
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+comment2.params=nbOfPlayers
+comment2.target=Game(int)
+comment3.params=
+comment3.target=int\ getNbPlayers()
+comment4.params=currentPlayer
+comment4.target=void\ display(int)
+comment5.params=
+comment5.target=void\ play()
+comment6.params=player
+comment6.target=void\ move(Player)
+comment7.params=player
+comment7.target=void\ discardToken(Player)
+comment8.params=
+comment8.target=boolean\ isGameOver()
+comment9.params=
+comment9.target=void\ gameOver()
+numComments=10

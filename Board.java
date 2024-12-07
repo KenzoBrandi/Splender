@@ -9,10 +9,8 @@ import java.util.Set;
 import java.util.Collections;
 
 public class Board implements Displayable {
-
-    private Stack<DevCard> pile1;
-    private Stack<DevCard> pile2;
-    private Stack<DevCard> pile3;
+    
+    private ArrayList<Stack> stackCards;
 
     private DevCard[][] visibleCards ; 
     private Resources resources;
@@ -23,9 +21,9 @@ public class Board implements Displayable {
      */
     public Board(int nbPlayers){
         //Création des 3 piles de DevCard faces cachées
-        pile1 = new Stack<DevCard>();
-        pile2 = new Stack<DevCard>();
-        pile3 = new Stack<DevCard>();
+        Stack<DevCard> pile1 = new Stack<DevCard>();
+        Stack<DevCard> pile2 = new Stack<DevCard>();
+        Stack<DevCard> pile3 = new Stack<DevCard>();
         ArrayList<DevCard> stack = new ArrayList<DevCard>(); 
 
         visibleCards = new DevCard[3][4];
@@ -35,6 +33,10 @@ public class Board implements Displayable {
             Scanner scanner = new Scanner(file);
 
             // Lire le fichier ligne par ligne
+ 
+            for (int i = 0; i<9;i++){
+                scanner.nextLine();
+            }
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] values = line.split(",");
@@ -66,9 +68,14 @@ public class Board implements Displayable {
                 pile3.push(card);
             }
         }
+        
+        stackCards = new ArrayList<Stack>();
+        stackCards.add(pile1);
+        stackCards.add(pile2);
+        stackCards.add(pile3);
         //Rendre visible 4 cartes de chaques piles de DevCard
         visibleCards = new DevCard[3][4];
-        for(int i=1;i<4;i++){
+        for(int i=0;i<3;i++){
             for(int k=0; k<4; k++){
                 visibleCards[i][k]= drawCard(i);
             }
@@ -106,36 +113,29 @@ public class Board implements Displayable {
      *Initialisation du nombre de ressources pour un type donné
      *Input: String type de ressource
      */
-    public void setNbResources(String type){
-
+    public void setNbResources(Resource type,int nb){
+        resources.setNbResource(type,nb);
     }
 
     /**
      *Ajoute/Enlève une quantité donnée de ressources à un type donné
      *Input: String type de ressource; int quantité
      */
-    public void updateNbResource(String type, int qte){
-
+    public void updateNbResource(Resource type, int qte){
+        resources.updateNbResource(type,qte);
     }
     
     /**
      *Retourne les types de ressources pour lesquels des ressources sont disponibles
      *Output: String type de ressources
      */
-    public void getAvailableResources(){
-
+    public HashMap getAvailableResources(){
+        return resources.getAvailableResources();
     }
 
     public DevCard getCard(int niveau,int colonne){
-        Stack<DevCard> pile = new Stack<DevCard>();
 
-        if (niveau == 1){
-            pile = pile1;
-        }else if(niveau == 2){
-            pile = pile2;
-        }else{
-            pile = pile3;
-        }
+        Stack<DevCard> pile = stackCards.get(niveau);
 
         return pile.get(colonne);
     }
@@ -146,15 +146,8 @@ public class Board implements Displayable {
     }
 
     public DevCard drawCard(int niveau){
-        Stack<DevCard> pile = new Stack<DevCard>();
 
-        if (niveau == 1){
-            pile = pile1;
-        }else if(niveau == 2){
-            pile = pile2;
-        }else{
-            pile = pile3;
-        }
+        Stack<DevCard> pile = stackCards.get(niveau);
 
         if (pile.size() == 0){
             return null;
@@ -186,14 +179,8 @@ public class Board implements Displayable {
          *  ╲________╲│
          */
 
-        Stack<DevCard> pile = new Stack<DevCard>();
-        if (tier == 1){
-            pile = pile1;
-        }else if(tier == 2){
-            pile = pile2;
-        }else{
-            pile = pile3;
-        }
+        
+        Stack<DevCard> pile = stackCards.get(tier-1);
 
         int nbCards = pile.size();
         String[] deckStr = {"\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  ",
@@ -233,9 +220,9 @@ public class Board implements Displayable {
 
         //Card display
         String[] cardDisplay = Display.emptyStringArray(0, 0);
-        for(int i=1;i<=3;i++){ //-- parcourir les différents niveaux de carte (i)
+        for(int i=0;i< 3;i++){ //-- parcourir les différents niveaux de carte (i)
             String[] tierCardsDisplay = Display.emptyStringArray(8, 0);
-            for(DevCard card : cards){ //-- parcourir les 4 cartes faces visibles pour un niveau donné (j)
+            for(int j = 0;j<4;j++){ //-- parcourir les 4 cartes faces visibles pour un niveau donné (j)
                 tierCardsDisplay = Display.concatStringArray(tierCardsDisplay, visibleCards[i][j]!=null ? visibleCards[i][j].toStringArray() : DevCard.noCardStringArray(), false);
             }
             cardDisplay = Display.concatStringArray(cardDisplay, Display.emptyStringArray(1, 40), true);
@@ -253,7 +240,7 @@ public class Board implements Displayable {
 
     @Override
     public String[] toStringArray() {
-        return boardToStringArray();;
+        return boardToStringArray();
     }
 
 }
