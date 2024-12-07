@@ -11,27 +11,45 @@ dependency3.type=UsesDependency
 dependency4.from=Game
 dependency4.to=Board
 dependency4.type=UsesDependency
+<<<<<<< HEAD
 dependency5.from=Game
 dependency5.to=Player
+=======
+dependency5.from=DevCard
+dependency5.to=Resources
+>>>>>>> main
 dependency5.type=UsesDependency
 dependency6.from=DevCard
 dependency6.to=Resource
 dependency6.type=UsesDependency
+<<<<<<< HEAD
 editor.fx.0.height=822
 editor.fx.0.width=780
 editor.fx.0.x=760
+=======
+dependency7.from=Resources
+dependency7.to=Resource
+dependency7.type=UsesDependency
+editor.fx.0.height=0
+editor.fx.0.width=0
+editor.fx.0.x=0
+>>>>>>> main
 editor.fx.0.y=0
-objectbench.height=184
+objectbench.height=149
 objectbench.width=901
 package.divider.horizontal=0.5997361477572559
-package.divider.vertical=0.7368565169769989
-package.editor.height=532
+package.divider.vertical=0.7847754654983572
+package.editor.height=567
 package.editor.width=1395
 package.editor.x=0
 package.editor.y=0
 package.frame.height=830
 package.frame.width=1550
+<<<<<<< HEAD
 package.numDependencies=6
+=======
+package.numDependencies=7
+>>>>>>> main
 package.numTargets=8
 package.showExtends=true
 package.showUses=true
@@ -53,8 +71,13 @@ target2.name=Displayable
 target2.showInterface=false
 target2.type=InterfaceTarget
 target2.width=120
+<<<<<<< HEAD
 target2.x=770
 target2.y=150
+=======
+target2.x=50
+target2.y=290
+>>>>>>> main
 target3.height=70
 target3.name=Player
 target3.showInterface=false
@@ -84,12 +107,21 @@ target6.width=120
 target6.x=350
 target6.y=410
 target7.height=70
+<<<<<<< HEAD
 target7.name=DevCard
 target7.showInterface=false
 target7.type=ClassTarget
 target7.width=120
 target7.x=870
 target7.y=290
+=======
+target7.name=Resources
+target7.showInterface=false
+target7.type=ClassTarget
+target7.width=120
+target7.x=70
+target7.y=10
+>>>>>>> main
 target8.height=70
 target8.name=Display
 target8.showInterface=false
