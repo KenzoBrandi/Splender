@@ -1,12 +1,13 @@
 /*
- * @author	Corentin Dufourg
+ * @author    Corentin Dufourg
  * @version     1.1
  * @since       1.0
  */
 
 import java.util.List;
+import java.util.ArrayList;
 
-public class Game {
+public class Game extends Exception{
     /* L'affichage et la lecture d'entrée avec l'interface de jeu se fera entièrement via l'attribut display de la classe Game.
      * Celui-ci est rendu visible à toutes les autres classes par souci de simplicité.
      * L'intéraction avec la classe Display est très similaire à celle que vous auriez avec la classe System :
@@ -28,14 +29,25 @@ public class Game {
         display.close();
     }
 
-    public Game(int nbOfPlayers){
-        /*
-         * ACOMPLETER
-         */
+    public Game(int nbOfPlayers) throws IllegalArgumentException{
+        if(nbOfPlayers < 2 || nbOfPlayers > 4){
+            throw new IllegalArgumentException("Nombre de joueurs invalide: 2, 3 ou 4");
+        }
+        players = new ArrayList<Player>();
+        board = new Board();
+        if(nbOfPlayers == 2){
+            // ajouter un HumanPlayer et un DumbRobotPlayer
+        }
+        else if(nbOfPlayers == 3){
+            // ajouter un HumanPlayer et deux DumbRobotPlayer
+        }
+        else{
+            // ajouter un HumanPlayer et trois DumbRobotPlayer
+        }
     }
 
     public int getNbPlayers(){
-        return 0; //-- AMODIFIER
+        return players.size();
     }
 
     private void display(int currentPlayer){
@@ -56,31 +68,45 @@ public class Game {
     }
 
     public void play(){
+        int tour = 0;
+        while( !isGameOver()){
+            if(tour % getNbPlayers() == 0){
+                players.get(0); // ajouter la suite pour demander l'action du joueur
+                // quand les classe seront implémentées
+                tour += 1;
+            } else if(tour % getNbPlayers() == 1){
+                players.get(1); // pareil
+                tour += 1;
+            } else if (tour % getNbPlayers() == 2){
+                players.get(2); // pareil
+                tour += 1;
+            } else if (tour % getNbPlayers() == 3){
+                players.get(3); // pareil
+                tour += 1;
+            }
+        }
+    }
+
+    private void move(Player player){ // besoin de classe Player finie
         /*
          * ACOMPLETER
          */
     }
 
-    private void move(Player player){
+    private void discardToken(Player player){ // pareil
         /*
          * ACOMPLETER
          */
     }
 
-    private void discardToken(Player player){
-        /*
-         * ACOMPLETER
-         */
-    }
-
-    public boolean isGameOver(){
+    public boolean isGameOver(){ // pareil
         /*
          * ACOMPLETER
          */
         return false; //-- AMODIFIER
     }
 
-    private void gameOver(){
+    private void gameOver(){ // paril
         /*
          * ACOMPLETER
          */

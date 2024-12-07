@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=PickDiffTokensAction
+comment0.text=\r\n\ Action\ de\ prendre\ 3\ tokens\ de\ Resources\ diff\u00E9rentes\r\n
+comment1.params=key
+comment1.target=void\ process(Resource)
+comment1.text=\r\n\ \r\n
+comment2.params=
+comment2.target=java.lang.String\ toString()
+numComments=3
