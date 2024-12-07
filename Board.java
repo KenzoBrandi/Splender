@@ -14,7 +14,7 @@ public class Board implements Displayable {
     private ArrayList<DevCard> pile2;
     private ArrayList<DevCard> pile3;
     
-    private ArrayList<DevCard> cards; 
+    private ArrayList<DevCard> visibleCards ; 
     private Resources jetons;
     
     /**
@@ -25,12 +25,33 @@ public class Board implements Displayable {
         pile1 = new ArrayList<DevCard>();
         pile2 = new ArrayList<DevCard>();
         pile3 = new ArrayList<DevCard>();
+        try {
+            // Chemin vers le fichier CSV
+            File file = new File("stats.csv");
+            Scanner scanner = new Scanner(file);
+
+            // Lire le fichier ligne par ligne
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine(); // Lire une ligne entière
+                String[] values = line.split(","); // Diviser la ligne par les virgules (séparateur CSV)
+
+                // Afficher les valeurs lues
+                for (String value : values) {
+                    System.out.print(value + " ");
+                }
+                System.out.println(); // Passer à la ligne suivante
+            }
+
+            scanner.close(); // Fermer le scanner
+        } catch (FileNotFoundException e) {
+            System.out.println("Fichier introuvable : " + e.getMessage());
+        }
 
         //Rendre visible 4 cartes de chaques piles de DevCard
-        cards = new ArrayList<DevCard>();
+        visibleCards  = new ArrayList<DevCard>();
         for(int i=1;i<4;i++){
             for(int k=0; k<4; k++){
-                cards.add(drawCard(i));
+                visibleCards .add(drawCard(i));
             }
         }
         
