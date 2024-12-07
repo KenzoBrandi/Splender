@@ -12,7 +12,7 @@ public class Resources extends HashMap<Resource, Integer>
     public Resources()
     {
        super(); 
-       for ( Resource res: Resource.values()){
+       for(Resource res: Resource.values()){
            put(res,0);
        }
     }
@@ -46,5 +46,4 @@ public class Resources extends HashMap<Resource, Integer>
         return available;
     }
     
-
 }

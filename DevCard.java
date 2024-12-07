@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 public class DevCard implements Displayable {
     private int level;
     private Resources cost;
@@ -35,7 +36,7 @@ public class DevCard implements Displayable {
                             "\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518"};
         //update cost of the repr
         int i=6;
-        for(Resource res: cost){ //-- parcourir l'ensemble des resources (res)en utilisant l'énumération Resource
+        for(Resource res: cost.keySet()){ //-- parcourir l'ensemble des resources (res)en utilisant l'énumération Resource
             if(getCost().getNbResource(res)>0){
                 cardStr[i] = "\u2502"+getCost().getNbResource(res)+" "+res.toSymbol()+"    \u2502";
                 i--;
