@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=Resources
+comment0.text=\r\n\ Class\ Ressources\ avec\ une\ table\ de\ hachage\r\n
+comment1.params=
+comment1.target=Resources()
+comment1.text=\r\n\ Constructeur\ de\ Ressources\r\n
+comment2.params=key
+comment2.target=java.lang.Integer\ getNbResource(Resource)
+comment3.params=key\ newNbResource
+comment3.target=void\ setNbResource(Resource,\ java.lang.Integer)
+comment4.params=key\ v
+comment4.target=void\ updateNbResource(Resource,\ java.lang.Integer)
+comment5.params=
+comment5.target=java.util.HashMap\ getAvailableResources()
+numComments=6
