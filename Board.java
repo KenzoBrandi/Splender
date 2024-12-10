@@ -113,7 +113,13 @@ public class Board implements Displayable {
         }
 
     }
-
+    
+    
+    public Resources getResources(){
+        return resources;
+    }
+    
+    
     /**
      *Retourne le nombre de ressources disponibles sur le plateau en fonction du type de ressource entré en oaramètre
      *Input: Resource type de ressource
@@ -165,7 +171,20 @@ public class Board implements Displayable {
      * Input:DevCard carte à remplacer
      */
     public void updateCard(DevCard card){
-        drawCard(card.getLevel());
+        DevCard newCard = drawCard(card.getLevel());
+        int i = card.getLevel();
+        int j = 0;
+        boolean trouve = false;
+        while(j < 4 && !trouve){
+            if (card == visibleCards[i][j]){
+                trouve = true;
+            }
+            j +=1;
+        }
+        
+        if(trouve){
+             visibleCards[i][j] = newCard;
+        }
     }
     
     
@@ -190,7 +209,7 @@ public class Board implements Displayable {
      * Input: Resource type du jeton
      * Output: Boolean
      */
-    public boolean canGivesameTokens(Resource type){
+    public boolean canGiveSameTokens(Resource type){
         return resources.getNbResource(type) >= 4;
     }
     

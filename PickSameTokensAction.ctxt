@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=PickSameTokensAction
+comment0.text=\r\n\ Action\ de\ prendre\ 2\ tokens\ de\ Resources\ si\ il\ y\ en\ as\ assez\r\n
+comment1.params=r
+comment1.target=PickSameTokensAction(Resource)
+comment2.params=board
+comment2.target=void\ process(Board)
+comment2.text=\r\n\ enl\u00E8ve\ 2\ tokens\ du\ type\ demand\u00E9\ des\ ressources\ et\ les\ rajoutes\ au\ joueur\r\n\ s'il\ y\ en\ as\ assez\r\n
+comment3.params=
+comment3.target=java.lang.String\ toString()
+numComments=4

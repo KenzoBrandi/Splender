@@ -34,7 +34,7 @@ public class Game extends Exception{
             throw new IllegalArgumentException("Nombre de joueurs invalide: 2, 3 ou 4");
         }
         players = new ArrayList<Player>();
-        board = new Board();
+        board = new Board(nbOfPlayers);
         if(nbOfPlayers == 2){
             // ajouter un HumanPlayer et un DumbRobotPlayer
         }
