@@ -10,9 +10,11 @@ import java.util.Collections;
 
 public class Board implements Displayable {
     
+    //Liste de toutes les cartes faces cachées, triées par niveau
     private ArrayList<Stack> stackCards;
-
-    private DevCard[][] visibleCards ; 
+    //Tableau de toutes les cartes faces visibles
+    private DevCard[][] visibleCards ;
+    //Jetons ressources
     private Resources resources;
 
     
@@ -24,31 +26,42 @@ public class Board implements Displayable {
         Stack<DevCard> pile1 = new Stack<DevCard>();
         Stack<DevCard> pile2 = new Stack<DevCard>();
         Stack<DevCard> pile3 = new Stack<DevCard>();
+        
+        //Liste de DevCards éphémère
         ArrayList<DevCard> stack = new ArrayList<DevCard>(); 
-
         visibleCards = new DevCard[3][4];
+        
         try {
-            // Chemin vers le fichier CSV
+            // Lecture du fichier csv
             File file = new File("stats.csv");
             Scanner scanner = new Scanner(file);
 
-            // Lire le fichier ligne par ligne
+            // On ne lit pas les 9 premières lignes du fichier (cartes NOBLE)
  
             for (int i = 0; i<9;i++){
                 scanner.nextLine();
             }
+            
+            //Création de toutes les DevCard
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] values = line.split(",");
+                
+                //Récupération des éléments pour créer les DevCards
                 Resource[] res ={ Resource.DIAMOND,Resource.SAPPHIRE,Resource.EMERALD,Resource.RUBY,Resource.ONYX};
                 int niveau = Integer.parseInt(values[0]);
                 Resources resources = new Resources();
+                
                 for (int i = 1;i<6;i++){
                     resources.setNbResource(res[i-1], Integer.valueOf(values[i]));
                 }
                 int points = Integer.parseInt(values[6]);
                 Resource resourceType = Resource.valueOf(values[7]);
+                
+                //Appel au constructeur de la classe DevCard
                 DevCard newCard = new DevCard(niveau,resources,points,resourceType);
+                
+                //Ajout de la carte à la liste éphémère
                 stack.add(newCard);
             }
 
@@ -56,8 +69,11 @@ public class Board implements Displayable {
         } catch (FileNotFoundException e) {
             System.out.println("Fichier introuvable : " + e.getMessage());
         }
-
+    
+        //Mélanger les cartes dans la liste pour qu'elles soient rangées aléatoirement
         Collections.shuffle(stack);
+        
+        //Triage des cartes par niveau (les cartes restent rangées aléatoirement)
         for (DevCard card: stack){
             int niveau = card.getLevel();
             if (niveau == 1){
@@ -69,10 +85,13 @@ public class Board implements Displayable {
             }
         }
         
+        //Instantiation de l'attribut stackCards (liste de toutes les cartes triées par niveau)
         stackCards = new ArrayList<Stack>();
         stackCards.add(pile1);
         stackCards.add(pile2);
         stackCards.add(pile3);
+        
+        
         //Rendre visible 4 cartes de chaques piles de DevCard
         visibleCards = new DevCard[3][4];
         for(int i=0;i<3;i++){
@@ -96,22 +115,18 @@ public class Board implements Displayable {
     }
 
     /**
-     *Retourne le nombre de ressources disponibles sur le plateau
-     *Output: String nombre de ressources disponible par type
+     *Retourne le nombre de ressources disponibles sur le plateau en fonction du type de ressource entré en oaramètre
+     *Input: Resource type de ressource
+     *Output: Integer nombre de ressources disponible
      */
 
-    public String getNbRessources(){
-        StringBuilder str = new StringBuilder();  // Utiliser StringBuilder pour plus d'efficacité
-        resources.forEach((key, value) -> {
-                    str.append(key.toString()).append(" -> ").append(value).append("\n");  // Ajoute chaque élément avec une nouvelle ligne
-            });
-
-        return str.toString();
+    public Integer getNbResources(Resource type){
+        return resources.getNbResource(type);
     }
 
     /**
      *Initialisation du nombre de ressources pour un type donné
-     *Input: String type de ressource
+     *Input: String type de ressource int nombre de ressources
      */
     public void setNbResources(Resource type,int nb){
         resources.setNbResource(type,nb);
@@ -127,12 +142,17 @@ public class Board implements Displayable {
     
     /**
      *Retourne les types de ressources pour lesquels des ressources sont disponibles
-     *Output: String type de ressources
+     *Output: HashMap type de ressources
      */
     public HashMap getAvailableResources(){
         return resources.getAvailableResources();
     }
 
+    /**
+     * Retourne une carte en fonction de sa position
+     * Input: int ligne(niveau); int colonne
+     * Output: DevCard
+     */
     public DevCard getCard(int niveau,int colonne){
 
         Stack<DevCard> pile = stackCards.get(niveau);
@@ -140,11 +160,19 @@ public class Board implements Displayable {
         return pile.get(colonne);
     }
 
+    /**
+     * Tire une carte de même niveau de celle entrée en paramètre
+     * Input:DevCard carte à remplacer
+     */
     public void updateCard(DevCard card){
-        //Tire une carte dans la pioche du même niveau que card
         drawCard(card.getLevel());
     }
-
+    
+    
+    /**
+     * Retourne la 1ere carte de la pile du niveau entré en paramètre
+     * Input: int niveau
+     */
     public DevCard drawCard(int niveau){
 
         Stack<DevCard> pile = stackCards.get(niveau);
@@ -155,13 +183,24 @@ public class Board implements Displayable {
             return pile.pop();
         }
     }
-
+    
+    
+    /**
+     * Retourne s'il est possible de prendre deux jetons de même type pour un type donné
+     * Input: Resource type du jeton
+     * Output: Boolean
+     */
     public boolean canGivesameTokens(Resource type){
         return resources.getNbResource(type) >= 4;
     }
-
-    public boolean canGiveDiffTokens(){
-        return true;
+    
+    /**
+     * Retourne s'il est possible de prendre deux jetons de même type pour un type donné
+     * Input: Resource type du jeton
+     * Output: Boolean
+     */
+    public boolean canGiveDiffTokens(Resource type){
+        return resources.getNbResource(type) > 0;
     }
 
     
