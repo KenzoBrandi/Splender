@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=DumbRobotPlayer
+comment0.text=\r\n\ Un\ joueur\ robot\ stupide\ \r\n
+comment1.params=name\ id
+comment1.target=DumbRobotPlayer(java.lang.String,\ int)
+comment2.params=a
+comment2.target=Action\ chooseAction(Action)
+comment3.params=
+comment3.target=Resources\ chooseDiscardingTokens()
+numComments=4
