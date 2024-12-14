@@ -1,3 +1,5 @@
+ 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 public abstract class Player implements Displayable {
@@ -6,35 +8,73 @@ public abstract class Player implements Displayable {
     private int points;
     private ArrayList<DevCard> purchasedCards;
     private Resources resources;
+    private Board board;
     
-    public Player(String name, int id){
+    /**
+     * Constructeur
+     */
+    public Player(String name, int id,Board board){
         this.name = name;
         this.id = id;
+        this.board = board;
         points = 0;
         purchasedCards = new ArrayList<DevCard>();
         resources = new Resources();
     }
     
+    /**
+     * Getter pour board
+     */
+    public Board getBoard(){
+        return board;
+    }
+    
+    /**
+     * Getter pour Name
+     */
     public String getName(){
         return name;
     }
     
+    /**
+     * Getter pour Points
+     */
     public int getPoints(){
         return points;
     }
     
-    public Resources getNbTokens(){
+    /**
+     * Getter pour les tokens
+     */
+    public Resources getTokens(){
         return resources;
     }
     
-    public ArrayList<DevCard> getNbPurchasedCards(){
-        return purchasedCards;
+    public int getNbTokens(){
+        int res = 0;
+        for (Integer value: resources.values()){
+            res += value;
+        }
+        return res;
     }
     
+    /**
+     * Renvoi le nombre de cartes achetées
+     */
+    public int getNbPurchasedCards(){
+        return purchasedCards.size();
+    }
+    
+    /**
+     * Renvoi le nombre de ressources en jetons pour un type donnée
+     */
     public int getNbResource(Resource res){
         return resources.getNbResource(res);
     }
     
+    /**
+     * Renvoi les ressources obtenues avec les cartes
+     */
     public int getResFromCards(Resource res){
         int result = 0;
         for(int i = 0; i < purchasedCards.size(); i++){
@@ -45,28 +85,43 @@ public abstract class Player implements Displayable {
         return result;
     }
     
-        public HashMap getAvailableResources(){
+    /**
+     * Renvoi un HashMap des ressources disponibles
+     */
+        public HashMap<Resource, Integer> getAvailableResources(){
         return resources.getAvailableResources();
     }
     
+    /**
+     * Met à jour la ressource du type donné avec la valeur v
+     */
     public void updateNbResource(Resource key, Integer v){
-        resources.updateNbResource(key, v);
+        resources.updateNbResource(key,v);
     }
     
+    /**
+     * Ajoute les points au joueur
+     */
     public void updatePoints(int p){
         points += p;
     }
     
+    /**
+     * Ajoute une carte achetée à la liste de cartes du joueur
+     */
     public void addPurchasedCard(DevCard card){
         purchasedCards.add(card);
     }
     
+    /**
+     * Vérifie si le joueur à assez de ressources pour acheter une carte donnée
+     */
     public boolean canBuyCard(DevCard card){ 
         boolean result = false;
         Resources cout = card.getCost();
         
         for(Resource key : cout.keySet()){
-            if(resources.get(key) >= cout.get(key)){
+            if(getNbResource(key) + getResFromCards(key) >= cout.get(key)){
                 result = true;
             } else{
                 return false;
@@ -76,8 +131,20 @@ public abstract class Player implements Displayable {
         return result;
     }
     
-    public abstract void chooseAction();
-    public abstract void chooseDiscardingTokens();
+    /**
+     * Permet de choisir une action de l'interface Action
+     */
+    public abstract Action chooseAction() throws IntNotValidException;
+    
+    /**
+     * Permet de choisir quels jetons remettre sur le plateau
+     */
+    public abstract HashMap<Resource,Integer> chooseDiscardingTokens();
+    
+    public String toString(){
+        String str = name + id;
+        return str;
+    }
     
     /* --- Stringers --- */
    

@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=HumanPlayer
+comment1.params=name\ id\ board
+comment1.target=HumanPlayer(java.lang.String,\ int,\ Board)
+comment2.params=
+comment2.target=Action\ chooseAction()
+comment3.params=
+comment3.target=java.util.HashMap\ chooseDiscardingTokens()
+numComments=4

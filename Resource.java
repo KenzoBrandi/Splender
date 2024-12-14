@@ -1,3 +1,5 @@
+ 
+
 public enum Resource {
     DIAMOND,
     SAPPHIRE,

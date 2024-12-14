@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=DevCard
 comment1.params=niveau\ cout\ pointsPrestige\ bonus
-comment1.target=void\ DevCard(int,\ Resources,\ int,\ Resource)
+comment1.target=DevCard(int,\ Resources,\ int,\ Resource)
 comment2.params=
 comment2.target=java.lang.String[]\ toStringArray()
 comment3.params=

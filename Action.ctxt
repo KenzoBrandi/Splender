@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.target=Action
 comment0.text=\r\n\ pour\ g\u00E9rer\ les\ diff\u00E9rentes\ actions\ possibles\ des\ joueurs\r\n
-comment1.params=r
-comment1.target=void\ process(Resource)
+comment1.params=b
+comment1.target=void\ process(Board)
 comment1.text=\r\n\ \r\n
 comment2.params=
 comment2.target=java.lang.String\ toString()
