@@ -111,7 +111,7 @@ public class Board implements Displayable {
             });
         } else if (nbPlayers == 3){
             resources.forEach((key, value) ->{
-                resources.put(key,new Integer(5));
+                resources.put(key,new Integer(50));
             });
         } else{
             resources.forEach((key, value) ->{

@@ -28,9 +28,22 @@ public class Game extends Exception{
         //-- à modifier pour permettre plusieurs scénarios de jeu
         display.outBoard.println("Bienvenue sur Splendor !");
         display.outBoard.println("Démarrage du jeu !");
+        Game game = null;
+        if (args.length == 1){
+            //Partie où l'utilisateur décide du nombre de joueurs
+            game = new Game(Integer.parseInt(args[0]));
+        } else if (args.length == 2){
+            if (Integer.parseInt(args[1])== 0){
+                game = new Game(Integer.parseInt(args[0]));
+            } else {
+                //Partie où l'utilisateur décide du nombre de joueurs et celui des joueurs humains
+                game = new Game(Integer.parseInt(args[0]),Integer.parseInt(args[1]));    
+            }
+        }
+        if (game != null){
+            game.play();
+        }
         
-        Game game = new Game(2);
-        game.play();
         
         display.close();
     }
@@ -80,7 +93,170 @@ public class Game extends Exception{
         }
 
     }
-
+    
+    /**
+     * Constucteur avec plusieurs humains
+     */
+    public Game(int nbOfPlayers,int nbOfHumans){
+        if(nbOfPlayers < 2 || nbOfPlayers > 4){
+            throw new IllegalArgumentException("Nombre de joueurs invalide: 2, 3 ou 4");
+        }
+        if (nbOfHumans > nbOfPlayers){
+            throw new IllegalArgumentException("Nombre de joueurs humains > joueurs totals");
+        }
+        players = new ArrayList<Player>();
+        board = new Board(nbOfPlayers);
+        
+        Scanner scanner = new Scanner(display.in);
+        scanner.nextLine();
+        
+        if (nbOfPlayers == 2){
+                if (nbOfHumans == 1){
+                    // ajouter un HumanPlayer
+                    display.out.println("Veuillez entrer votre nom de joueur: ");
+                    String name = scanner.nextLine();
+                    HumanPlayer humanPlayer = new HumanPlayer(name,0,board);
+                    players.add(humanPlayer);
+                    //et un DumbRobotPlayer
+                    DumbRobotPlayer dumbRobotPlayer = new DumbRobotPlayer("Robot",1,board);
+                    players.add(dumbRobotPlayer);
+                } else {
+                    // ajouter un HumanPlayer1
+                    display.out.println("Veuillez le nom du 1er joueur: ");
+                    String name1 = scanner.nextLine();
+                    HumanPlayer humanPlayer1 = new HumanPlayer(name1,0,board);
+                    players.add(humanPlayer1);
+                    // ajouter un HumanPlayer2
+                    display.out.println("Veuillez le nom du 2è joueur: ");
+                    String name2 = scanner.nextLine();
+                    HumanPlayer humanPlayer2 = new HumanPlayer(name2,1,board);
+                    players.add(humanPlayer2);
+                    
+                }
+                
+        }else if (nbOfPlayers == 3) {
+                if (nbOfHumans == 1){
+                    // ajouter un HumanPlayer
+                    display.out.println("Veuillez entrer votre nom de joueur: ");
+                    String name = scanner.nextLine();
+                    HumanPlayer humanPlayer = new HumanPlayer(name,0,board);
+                    players.add(humanPlayer);
+                    //et un DumbRobotPlayer1
+                    DumbRobotPlayer dumbRobotPlayer1 = new DumbRobotPlayer("Robot1",1,board);
+                    players.add(dumbRobotPlayer1);
+                    //et un DumbRobotPlayer2
+                    DumbRobotPlayer dumbRobotPlayer2 = new DumbRobotPlayer("Robot2",2,board);
+                    players.add(dumbRobotPlayer2);
+                } else if (nbOfHumans == 2) {
+                    // ajouter un HumanPlayer1
+                    display.out.println("Veuillez le nom du 1er joueur: ");
+                    String name1 = scanner.nextLine();
+                    HumanPlayer humanPlayer1 = new HumanPlayer(name1,0,board);
+                    players.add(humanPlayer1);
+                    // ajouter un HumanPlayer2
+                    display.out.println("Veuillez le nom du 2è joueur: ");
+                    String name2 = scanner.nextLine();
+                    HumanPlayer humanPlayer2 = new HumanPlayer(name2,1,board);
+                    players.add(humanPlayer2);
+                    //et un DumbRobotPlayer
+                    DumbRobotPlayer dumbRobotPlayer = new DumbRobotPlayer("Robot",2,board);
+                    players.add(dumbRobotPlayer);
+                    
+                } else {
+                    // ajouter un HumanPlayer1
+                    display.out.println("Veuillez le nom du 1er joueur: ");
+                    String name1 = scanner.nextLine();
+                    HumanPlayer humanPlayer1 = new HumanPlayer(name1,0,board);
+                    players.add(humanPlayer1);
+                    // ajouter un HumanPlayer2
+                    display.out.println("Veuillez le nom du 2è joueur: ");
+                    String name2 = scanner.nextLine();
+                    HumanPlayer humanPlayer2 = new HumanPlayer(name2,1,board);
+                    players.add(humanPlayer2);
+                    // ajouter un HumanPlayer3
+                    display.out.println("Veuillez le nom du 3è joueur: ");
+                    String name3 = scanner.nextLine();
+                    HumanPlayer humanPlayer3 = new HumanPlayer(name3,2,board);
+                    players.add(humanPlayer3);
+                }
+                
+        } else {
+                if (nbOfHumans == 1){
+                    // ajouter un HumanPlayer
+                    display.out.println("Veuillez entrer votre nom de joueur: ");
+                    String name = scanner.nextLine();
+                    HumanPlayer humanPlayer = new HumanPlayer(name,0,board);
+                    players.add(humanPlayer);
+                    //et un DumbRobotPlayer1
+                    DumbRobotPlayer dumbRobotPlayer1 = new DumbRobotPlayer("Robot1",1,board);
+                    players.add(dumbRobotPlayer1);
+                    //et un DumbRobotPlayer2
+                    DumbRobotPlayer dumbRobotPlayer2 = new DumbRobotPlayer("Robot2",2,board);
+                    players.add(dumbRobotPlayer2);
+                    //et un DumbRobotPlayer2
+                    DumbRobotPlayer dumbRobotPlayer3 = new DumbRobotPlayer("Robot3",3,board);
+                    players.add(dumbRobotPlayer3);
+                } else if (nbOfHumans == 2) {
+                    // ajouter un HumanPlayer1
+                    display.out.println("Veuillez le nom du 1er joueur: ");
+                    String name1 = scanner.nextLine();
+                    HumanPlayer humanPlayer1 = new HumanPlayer(name1,0,board);
+                    players.add(humanPlayer1);
+                    // ajouter un HumanPlayer2
+                    display.out.println("Veuillez le nom du 2è joueur: ");
+                    String name2 = scanner.nextLine();
+                    HumanPlayer humanPlayer2 = new HumanPlayer(name2,1,board);
+                    players.add(humanPlayer2);
+                    //et un DumbRobotPlayer1
+                    DumbRobotPlayer dumbRobotPlayer1 = new DumbRobotPlayer("Robot1",2,board);
+                    players.add(dumbRobotPlayer1);
+                    //et un DumbRobotPlayer2
+                    DumbRobotPlayer dumbRobotPlayer2 = new DumbRobotPlayer("Robot2",3,board);
+                    players.add(dumbRobotPlayer2);
+                    
+                } else if (nbOfHumans == 3)  {
+                    // ajouter un HumanPlayer1
+                    display.out.println("Veuillez le nom du 1er joueur: ");
+                    String name1 = scanner.nextLine();
+                    HumanPlayer humanPlayer1 = new HumanPlayer(name1,0,board);
+                    players.add(humanPlayer1);
+                    // ajouter un HumanPlayer2
+                    display.out.println("Veuillez le nom du 2è joueur: ");
+                    String name2 = scanner.nextLine();
+                    HumanPlayer humanPlayer2 = new HumanPlayer(name2,1,board);
+                    players.add(humanPlayer2);
+                    // ajouter un HumanPlayer3
+                    display.out.println("Veuillez le nom du 3è joueur: ");
+                    String name3 = scanner.nextLine();
+                    HumanPlayer humanPlayer3 = new HumanPlayer(name3,2,board);
+                    players.add(humanPlayer3);
+                    //et un DumbRobotPlayer
+                    DumbRobotPlayer dumbRobotPlayer = new DumbRobotPlayer("Robot",3,board);
+                    players.add(dumbRobotPlayer);
+                } else {
+                    // ajouter un HumanPlayer1
+                    display.out.println("Veuillez le nom du 1er joueur: ");
+                    String name1 = scanner.nextLine();
+                    HumanPlayer humanPlayer1 = new HumanPlayer(name1,0,board);
+                    players.add(humanPlayer1);
+                    // ajouter un HumanPlayer2
+                    display.out.println("Veuillez le nom du 2è joueur: ");
+                    String name2 = scanner.nextLine();
+                    HumanPlayer humanPlayer2 = new HumanPlayer(name2,1,board);
+                    players.add(humanPlayer2);
+                    // ajouter un HumanPlayer3
+                    display.out.println("Veuillez le nom du 3è joueur: ");
+                    String name3 = scanner.nextLine();
+                    HumanPlayer humanPlayer3 = new HumanPlayer(name3,2,board);
+                    players.add(humanPlayer3);
+                    // ajouter un HumanPlayer4
+                    display.out.println("Veuillez le nom du 4è joueur: ");
+                    String name4 = scanner.nextLine();
+                    HumanPlayer humanPlayer4 = new HumanPlayer(name4,3,board);
+                    players.add(humanPlayer4);
+                }
+        }
+    }
     /**
      * Getter du nombre de joueurs
      */
@@ -113,7 +289,10 @@ public class Game extends Exception{
      */
     public void play() throws IntNotValidException{
         int tour = 0;
-        while( !isGameOver()){
+        while( !isGameOver() || (tour % getNbPlayers() != 0)){
+            if (isGameOver() ){
+                System.out.println(tour);
+            }
             if(tour % getNbPlayers() == 0){
                display(0);
                 move(players.get(0)); 
@@ -141,16 +320,16 @@ public class Game extends Exception{
      * Choisi une action entre prendre des jetons, acheter une carte ou passer son tour
      */
     private void move(Player player) throws IntNotValidException{
-        Action actionChoisie = null;
-        if (player.getNbTokens() > 10){
-            actionChoisie = discardToken(player);
-        }
-        else{
-            actionChoisie = player.chooseAction();
-        }
+        Action actionChoisie =  player.chooseAction();
         actionChoisie.process(board);
         display.out.println(player.getName()+" " +actionChoisie.toString());
         display.out.println("Jetons total: "+ player.getNbTokens());
+        if (player.getNbTokens() > 10){
+            Action discardAction = discardToken(player);
+            discardAction.process(board);
+            display.out.println(player.getName()+" " +discardAction.toString());
+            display.out.println("Jetons total: "+ player.getNbTokens());
+        }
         display.out.println("--------------------------------------------------------");
     }
     
@@ -168,7 +347,7 @@ public class Game extends Exception{
      */
     public boolean isGameOver(){ 
         for(int i = 0; i < players.size(); i++){
-            if(players.get(i).getPoints() >= 15){
+            if(players.get(i).getPoints() >= 4){
                 return true;
             }
         }
@@ -180,25 +359,42 @@ public class Game extends Exception{
      * Affiche le message de victoire pour le joueur gagnant
      */
     private void gameOver(){
+        //liste des joueurs ayant + de 15 points
         ArrayList<Player> gagnants = new ArrayList<Player>();
+        Player gagnant =  players.get(0);
         for(int i = 0; i < players.size(); i++){
-            if(players.get(i).getPoints() >= 15){
+            if(players.get(i).getPoints() >= 4){
                 gagnants.add(players.get(i));
+                if (players.get(i).getPoints() >  gagnant.getPoints()){
+                    //joueur avec le point max
+                    gagnant = players.get(i);
+                }
             }
         }
         
         if(gagnants.size() == 1){
             System.out.println("Le joueur " + gagnants.get(0) + " a gagner.");
         } else{
-            int min = gagnants.get(0).getNbPurchasedCards();
-            int p = 0;
-            for(int k = 1; k < gagnants.size(); k++){
-                if(gagnants.get(k).getNbPurchasedCards() < min){
-                    min = gagnants.get(k).getNbPurchasedCards();
-                    p = k;
+            //joueur gagnant exeaquo en points avec le moins de cartes
+            for(Player joueur : gagnants){
+                if(joueur.getPoints() == gagnant.getPoints() && joueur.getNbPurchasedCards() < gagnant.getNbPurchasedCards() ){
+                    gagnant = joueur;
                 }
             }
-            System.out.println("Lejoueur " + gagnants.get(p) + " a gagner.");
+            //liste des joueurs exaequos en points et en cartes
+            ArrayList<Player> exaequos = new ArrayList<Player>();
+            for(Player joueur : gagnants){
+                if(joueur.getPoints() == gagnant.getPoints() && joueur.getNbPurchasedCards() == gagnant.getNbPurchasedCards() ){
+                    exaequos.add(joueur);
+                }
+            }
+            
+            if (exaequos.size() == 1){
+                System.out.println("Lejoueur " + gagnant + " a gagner.");
+            } else {
+                System.out.println("Exaequos!!");
+            }
+            
         }
     }
 }
