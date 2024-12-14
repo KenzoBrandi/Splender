@@ -100,10 +100,13 @@ public class HumanPlayer extends Player
                             System.out.println("Carte achetée: "+ card);
                             //mis à jour des ressources
                             card.getCost().forEach((key,value)->{
-                                //enlever les jetons dépensés du player après l'achat
-                                updateNbResource(key,-value + getResFromCards(key)); 
-                                //remettre les jetons dépensés sur le board après l'achat
-                                getBoard().updateNbResource(key,value - getResFromCards(key));
+                                int jetonsAEnlever = -value + getResFromCards(key);
+                                if(jetonsAEnlever < 0){
+                                    //enlever les jetons dépensés du player après l'achat
+                                    updateNbResource(key,jetonsAEnlever); 
+                                    //remettre les jetons dépensés sur le board après l'achat
+                                    getBoard().updateNbResource(key,-jetonsAEnlever);
+                                    }
                             });
                             addPurchasedCard(card);
                             updatePoints(card.getPoints());

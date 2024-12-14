@@ -35,9 +35,9 @@ public class DumbRobotPlayer extends Player
                         int jetonsAEnlever = -value + getResFromCards(key);
                         if(jetonsAEnlever < 0){
                             //enlever les jetons dépensés du player après l'achat
-                        updateNbResource(key,jetonsAEnlever); 
-                        //remettre les jetons dépensés sur le board après l'achat
-                        getBoard().updateNbResource(key,-jetonsAEnlever);
+                            updateNbResource(key,jetonsAEnlever); 
+                            //remettre les jetons dépensés sur le board après l'achat
+                            getBoard().updateNbResource(key,-jetonsAEnlever);
                         }
                     });
                     Action act = new BuyCardAction(card);
