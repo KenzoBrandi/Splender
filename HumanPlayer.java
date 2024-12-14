@@ -97,7 +97,6 @@ public class HumanPlayer extends Player
                         int j = scanner.nextInt();
                         DevCard card = getBoard().getVisibleCards()[3-i][j-1];
                         if (canBuyCard(card)){
-                            System.out.println("Carte achetée: "+ card);
                             //mis à jour des ressources
                             card.getCost().forEach((key,value)->{
                                 int jetonsAEnlever = -value + getResFromCards(key);

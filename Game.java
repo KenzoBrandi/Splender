@@ -40,10 +40,16 @@ public class Game extends Exception{
                 game = new Game(Integer.parseInt(args[0]),Integer.parseInt(args[1]));    
             }
         }
+        
         if (game != null){
             game.play();
         }
         
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            System.out.println("Le thread a été interrompu !");
+        }
         
         display.close();
     }
@@ -108,7 +114,6 @@ public class Game extends Exception{
         board = new Board(nbOfPlayers);
         
         Scanner scanner = new Scanner(display.in);
-        scanner.nextLine();
         
         if (nbOfPlayers == 2){
                 if (nbOfHumans == 1){
@@ -373,7 +378,7 @@ public class Game extends Exception{
         }
         
         if(gagnants.size() == 1){
-            System.out.println("Le joueur " + gagnants.get(0) + " a gagner.");
+            display.out.println("Le joueur " + gagnants.get(0) + " a gagner.");
         } else{
             //joueur gagnant exeaquo en points avec le moins de cartes
             for(Player joueur : gagnants){
@@ -390,9 +395,9 @@ public class Game extends Exception{
             }
             
             if (exaequos.size() == 1){
-                System.out.println("Lejoueur " + gagnant + " a gagner.");
+                display.out.println("Lejoueur " + gagnant + " a gagner.");
             } else {
-                System.out.println("Exaequos!!");
+                display.out.println("Exaequos!!");
             }
             
         }
