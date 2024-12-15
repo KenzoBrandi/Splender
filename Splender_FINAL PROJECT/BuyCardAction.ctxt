@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=BuyCardAction
+comment0.text=\r\n\ D\u00E9crivez\ votre\ classe\ BuyCardAction\ ici.\r\n\r\n\ @author\ (votre\ nom)\r\n\ @version\ (un\ num\u00E9ro\ de\ version\ ou\ une\ date)\r\n
+comment1.params=card
+comment1.target=BuyCardAction(DevCard)
+comment1.text=\r\n\ Constructeur\ d'objets\ de\ classe\ BuyCardAction\r\n
+comment2.params=board
+comment2.target=void\ process(Board)
+comment3.params=
+comment3.target=java.lang.String\ toString()
+numComments=4
