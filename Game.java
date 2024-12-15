@@ -361,7 +361,7 @@ public class Game extends Exception{
      */
     public boolean isGameOver(){ 
         for(int i = 0; i < players.size(); i++){
-            if(players.get(i).getPoints() >= 4){
+            if(players.get(i).getPoints() >= 15){
                 return true;
             }
         }
@@ -377,7 +377,7 @@ public class Game extends Exception{
         ArrayList<Player> gagnants = new ArrayList<Player>();
         Player gagnant =  players.get(0);
         for(int i = 0; i < players.size(); i++){
-            if(players.get(i).getPoints() >= 4){
+            if(players.get(i).getPoints() >= 15){
                 gagnants.add(players.get(i));
                 if (players.get(i).getPoints() >  gagnant.getPoints()){
                     //joueur avec le point max

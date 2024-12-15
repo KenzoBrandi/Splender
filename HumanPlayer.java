@@ -129,6 +129,7 @@ public class HumanPlayer extends Player
                 
             }   catch (InputMismatchException e2){
                 Game.display.out.println(e2.getMessage());
+                scanner.nextLine();
                 test = false;
             } catch (IndexOutOfBoundsException e3){
                 Game.display.out.println(e3.getMessage());
