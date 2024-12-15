@@ -295,9 +295,6 @@ public class Game extends Exception{
     public void play() throws IntNotValidException{
         int tour = 0;
         while( !isGameOver() || (tour % getNbPlayers() != 0)){
-            if (isGameOver() ){
-                System.out.println(tour);
-            }
             if(tour % getNbPlayers() == 0){
                display(0);
                 move(players.get(0)); 
@@ -325,8 +322,20 @@ public class Game extends Exception{
      * Choisi une action entre prendre des jetons, acheter une carte ou passer son tour
      */
     private void move(Player player) throws IntNotValidException{
-        Action actionChoisie =  player.chooseAction();
-        actionChoisie.process(board);
+        boolean test = false;
+        Action actionChoisie =  null;
+        while (!test){
+            try {
+            test = true;
+            actionChoisie =  player.chooseAction();
+            actionChoisie.process(board);
+            } catch (IllegalArgumentException e){
+                display.out.println(e.getMessage());
+                display.out.println();
+                test = false;
+            }
+        }
+        
         display.out.println(player.getName()+" " +actionChoisie.toString());
         display.out.println("Jetons total: "+ player.getNbTokens());
         if (player.getNbTokens() > 10){
@@ -397,7 +406,10 @@ public class Game extends Exception{
             if (exaequos.size() == 1){
                 display.out.println("Lejoueur " + gagnant + " a gagner.");
             } else {
-                display.out.println("Exaequos!!");
+                display.out.print("Exaequos pour les joueurs ");
+                for (Player joueur :exaequos){
+                    display.out.print(joueur +", ");
+                }
             }
             
         }

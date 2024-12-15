@@ -64,6 +64,7 @@ public class HumanPlayer extends Player
                         Resource resource = Resource.valueOf(jeton);
                         actionChoisie = new PickSameTokensAction(resource);
                         updateNbResource(resource,2);
+
                         break;
                     case 2:
                         String r1 = "";
@@ -146,17 +147,24 @@ public class HumanPlayer extends Player
         String jeton = "";
         int reste = 0;
         while (surplus > 0){
-            Game.display.out.println("Veuillez entrer un jeton à enlever: ");
-            jeton= scanner.nextLine().toUpperCase();
-            //reste de jetons d'un type après retrait
-            reste = getAvailableResources().getOrDefault(Resource.valueOf(jeton),0);
-            //Pour éviter le cas où on retire plus de jetons d'un type donné que ce qu'on a 
-            if(reste == 0){
-                Game.display.out.println("Veuillez entrer un jeton que vous avez en stock! ");
-            } else {
-                jeter.put(Resource.valueOf(jeton),jeter.getOrDefault(Resource.valueOf(jeton),0)+1);
-                updateNbResource(Resource.valueOf(jeton),-1);
-                surplus --;
+            try {
+                Game.display.out.print("Veuillez entrer un jeton à enlever parmi: ");
+                getAvailableResources().forEach((res,val)->{
+                    Game.display.out.print(val+ " "+res + "; ");
+                }); 
+                jeton= scanner.nextLine().toUpperCase();
+                //reste de jetons d'un type après retrait
+                reste = getAvailableResources().getOrDefault(Resource.valueOf(jeton),0);
+                //Pour éviter le cas où on retire plus de jetons d'un type donné que ce qu'on a 
+                if(reste == 0){
+                    Game.display.out.println("Veuillez entrer un jeton que vous avez en stock! ");
+                } else {
+                    jeter.put(Resource.valueOf(jeton),jeter.getOrDefault(Resource.valueOf(jeton),0)+1);
+                    updateNbResource(Resource.valueOf(jeton),-1);
+                    surplus --;
+                }
+            } catch (IllegalArgumentException e){
+                Game.display.out.println(e.getMessage());
             }
             
         }
