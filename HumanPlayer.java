@@ -129,7 +129,6 @@ public class HumanPlayer extends Player
                 
             }   catch (InputMismatchException e2){
                 Game.display.out.println(e2.getMessage());
-                scanner.nextLine();
                 test = false;
             } catch (IndexOutOfBoundsException e3){
                 Game.display.out.println(e3.getMessage());
@@ -153,7 +152,6 @@ public class HumanPlayer extends Player
                 getAvailableResources().forEach((res,val)->{
                     Game.display.out.print(val+ " "+res + "; ");
                 }); 
-                Game.display.out.println();
                 jeton= scanner.nextLine().toUpperCase();
                 //reste de jetons d'un type après retrait
                 reste = getAvailableResources().getOrDefault(Resource.valueOf(jeton),0);

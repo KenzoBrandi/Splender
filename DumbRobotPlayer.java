@@ -29,7 +29,8 @@ public class DumbRobotPlayer extends Player
         for(int i=0;i<=2;i++){
             for(int k=0; k<4; k++){
                 card = getBoard().getVisibleCards()[i][k];
-                if(canBuyCard(card)){
+                if(card != null){
+                    if(canBuyCard(card)){
                     //mis à jour des ressources
                     card.getCost().forEach((key,value)->{
                         int jetonsAEnlever = -value + getResFromCards(key);
@@ -45,6 +46,7 @@ public class DumbRobotPlayer extends Player
                     
                     updatePoints(card.getPoints());
                     return act;
+                    }
                 }
             }
         }

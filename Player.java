@@ -142,7 +142,7 @@ public abstract class Player implements Displayable {
     public abstract HashMap<Resource,Integer> chooseDiscardingTokens();
     
     public String toString(){
-        String str = name + id;
+        String str = name;
         return str;
     }
     
