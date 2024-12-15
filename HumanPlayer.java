@@ -153,6 +153,7 @@ public class HumanPlayer extends Player
                 getAvailableResources().forEach((res,val)->{
                     Game.display.out.print(val+ " "+res + "; ");
                 }); 
+                Game.display.out.println();
                 jeton= scanner.nextLine().toUpperCase();
                 //reste de jetons d'un type après retrait
                 reste = getAvailableResources().getOrDefault(Resource.valueOf(jeton),0);
