@@ -183,19 +183,28 @@ public class Board implements Displayable {
      * Input:DevCard carte à remplacer
      */
     public void updateCard(DevCard card){
-        DevCard newCard = drawCard(card.getLevel());
-        int i = 3-card.getLevel();
-        int j = 0;
-        boolean trouve = false;
-        while(j < 4 && !trouve){
-            if (card == visibleCards[i][j]){
-                trouve = true;
+        if (card != null){
+            DevCard newCard = drawCard(card.getLevel()); // 1e carte de la pile tier
+            
+            
+            if (newCard != null){
+                int i = 3-card.getLevel();
+                int j = 0;
+                boolean trouve = false;
+                
+                //On a cherche la position de l'ancienne carte
+                while(j < 4 && !trouve){
+                    if (card == visibleCards[i][j]){
+                        trouve = true;
+                    }
+                    j +=1;
+                }
+                
+                //On la remplace par la nouvelle
+                if(trouve){
+                    visibleCards[i][j-1] = newCard;
+                }
             }
-            j +=1;
-        }
-        
-        if(trouve){
-            visibleCards[i][j-1] = newCard;
         }
     }
     
@@ -250,7 +259,7 @@ public class Board implements Displayable {
          */
 
         
-        Stack<DevCard> pile = stackCards.get(tier-1);
+        Stack<DevCard> pile = stackCards.get(3-tier);
 
         int nbCards = pile.size();
         String[] deckStr = {"\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  ",
